@@ -3,33 +3,34 @@ interface functions{
     public void deposit(double amt);
     public void withdraw(double amt);
     public void previousTransaction();
-    public void menu();
-}
-class BankApplication implements functions{
-    String name;
-    int pin;
-    double balance;
-    double prevTrans;
-    BankApplication(String name, int pin){
-        this.name = name;
-        this.pin = pin;
     }
+
+class BankFunctionImplementation implements functions{
+    private double bal;
+    private double prevTrans;
+    public double getBal() {
+        return bal;
+    }
+    public void setBal(double bal) {
+        this.bal = bal;
+    }
+   
     public  void deposit(double amt){
         if(amt>0){
-            balance += amt;
+            bal += amt;
             prevTrans = amt;
         }
     }
     public void withdraw(double amt){
-        if(balance>amt){
-            balance -= amt;
+        if(bal>amt){
+            bal -= amt;
             prevTrans =- amt;
         }
-        if(balance < amt){
+        if(bal < amt){
             System.out.println("Your balance is insufficient to withdraw this amount.");
         }
     }
-    public void previousTransaction(){
+     public void previousTransaction(){
         if(prevTrans>0){
             System.out.println("Your previous transaction was deposit of Rs." +prevTrans);
         }
@@ -37,6 +38,15 @@ class BankApplication implements functions{
             System.out.println("Your previous transaction was withdraw of Rs."+ Math.abs(prevTrans));
         }
     }
+}
+class BankApplication  extends BankFunctionImplementation {
+    String name;
+    int pin;
+    BankApplication(String name, int pin){
+        this.name = name;
+        this.pin = pin;
+    }
+    
     public void menu(){
         System.out.println("Welcome :: " +name);
         Scanner sc = new Scanner(System.in);
@@ -54,7 +64,7 @@ class BankApplication implements functions{
                     System.out.println();
                     System.out.println("*******************************");
                     System.out.println();
-                    System.out.println("Your balance is :: Rs." + balance);                    
+                    System.out.println("Your balance is :: Rs." + getBal());                    
                     System.out.println();
                     System.out.println("*******************************");
                     System.out.println();
